@@ -59,7 +59,7 @@ async def token_handler(client, message):
     msg = await app.get_messages(chat_id, 796)
     user_id = message.chat.id
     if len(message.command) <= 1:
-        join_button = InlineKeyboardButton("Join Channel", url="https://t.me/+8mFE3KUGXUo0NmY0")
+        join_button = InlineKeyboardButton("Join Channel", url="https://t.me/+YBQtuGJ0XIEzOWU8")
         premium = InlineKeyboardButton("Get Premium", url="https://t.me/damed2025")   
         keyboard = InlineKeyboardMarkup([
             [join_button],   
