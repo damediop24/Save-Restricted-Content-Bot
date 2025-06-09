@@ -241,7 +241,7 @@ async def batch_link(_, message):
         return
         
  # Create an inline button for the channel link
-    join_button = InlineKeyboardButton("Join Channel", url="https://t.me/+8mFE3KUGXUo0NmY0")
+    join_button = InlineKeyboardButton("Join Channel", url="https://t.me/+YBQtuGJ0XIEzOWU8")
     keyboard = InlineKeyboardMarkup([[join_button]])
 
     # Send and Pin message to indicate the batch process has started
