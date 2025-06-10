@@ -27,7 +27,7 @@ batch_mode = {}
 async def process_and_upload_link(userbot, user_id, msg_id, link, retry_count, message):
     try:
         await get_msg(userbot, user_id, msg_id, link, retry_count, message)
-        await asyncio.sleep(15)
+        await asyncio.sleep(5)
     finally:
         pass
 
@@ -244,7 +244,7 @@ async def batch_link(_, message):
             return
             
         # Create an inline button for the channel link
-        join_button = InlineKeyboardButton("Join Channel", url="https://t.me/JarvisBotz")
+        join_button = InlineKeyboardButton("Join Channel", url="https://t.me/+2ZDbAkrQgXlhMDU0")
         keyboard = InlineKeyboardMarkup([[join_button]])
 
         # Send and Pin message to indicate the batch process has started
