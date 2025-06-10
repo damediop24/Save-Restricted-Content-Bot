@@ -7,7 +7,7 @@ BOT_TOKEN = getenv("BOT_TOKEN", "7229345973:AAFP67Ta3Z4CV66mC4SYL9Wjvf66b8S4sk4"
 OWNER_ID = list(map(int, getenv("OWNER_ID", "5118708665").split()))
 MONGO_DB = getenv("MONGO_DB", "mongodb+srv://damealorica:moitiere2A@saverbot.znrlqwc.mongodb.net/?retryWrites=true&w=majority&appName=SaverBot")
 LOG_GROUP = getenv("LOG_GROUP", "-1002707663831")
-CHANNEL_ID = int(getenv("CHANNEL_ID", "-1002707663831"))
+CHANNEL_ID = int(getenv("CHANNEL_ID", "-1002676263803"))
 FREEMIUM_LIMIT = int(getenv("FREEMIUM_LIMIT", "0"))
 PREMIUM_LIMIT = int(getenv("PREMIUM_LIMIT", "100000"))
 WEBSITE_URL = getenv("WEBSITE_URL", "")
