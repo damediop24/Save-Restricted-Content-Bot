@@ -201,113 +201,66 @@ async def batch_link(_, message):
         else:
             max_batch_size = PREMIUM_LIMIT
 
-    # Loop for start link input
-    attempts = 0
-    while attempts < 3:
-        start = await app.ask(message.chat.id, text="Please send the start link.\n\n> Maximum tries 3")
-        start_id = start.text.strip()
-        s = start_id.split("/")[-1]  # Extract the last part of the link
+    # Initialize userbot to None
+    userbot = None
+    try:
+        # Loop for start link input
+        attempts = 0
+        while attempts < 3:
+            start = await app.ask(message.chat.id, text="Please send the start link.\n\n> Maximum tries 3")
+            start_id = start.text.strip()
+            s = start_id.split("/")[-1]  # Extract the last part of the link
 
-        try:
-            cs = int(s)  # Try to convert the extracted part to an integer
-            break  # Exit loop if conversion is successful
-        except ValueError:
-            attempts += 1
-            if attempts == 3:
-                await app.send_message(message.chat.id, "You have exceeded the maximum number of attempts. Please try again later.")
-                return
-            await app.send_message(message.chat.id, "Invalid link. Please send again ...")
+            try:
+                cs = int(s)  # Try to convert the extracted part to an integer
+                break  # Exit loop if conversion is successful
+            except ValueError:
+                attempts += 1
+                if attempts == 3:
+                    await app.send_message(message.chat.id, "You have exceeded the maximum number of attempts. Please try again later.")
+                    return
+                await app.send_message(message.chat.id, "Invalid link. Please send again ...")
 
-    # Loop for the number of messages input
-    attempts = 0
-    while attempts < 3:
-        num_messages = await app.ask(message.chat.id, text="How many messages do you want to process?\n\n> Maximum limit is 10")
-        try:
-            cl = int(num_messages.text.strip())  # Try to convert input to an integer
-            if cl <= 0 or cl > max_batch_size:
-                raise ValueError(f"Number of messages must be between 1 and {max_batch_size}. Please write under limit or purchase the premium from @damed2025")
-            break  # Exit loop if conversion is successful
-        except ValueError as e:
-            attempts += 1
-            if attempts == 3:
-                await app.send_message(message.chat.id, "You have exceeded the maximum number of attempts. Please try again later.")
-                return
-            await app.send_message(message.chat.id, f"Invalid number: {e}. Please enter a valid number again ...")
-    
-    # Final validation before proceeding
-    can_proceed, response_message = await check_interval(user_id, freecheck)
-    if not can_proceed:
-        await message.reply(response_message)
-        return
+        # Loop for the number of messages input
+        attempts = 0
+        while attempts < 3:
+            num_messages = await app.ask(message.chat.id, text="How many messages do you want to process?\n\n> Maximum limit is 10")
+            try:
+                cl = int(num_messages.text.strip())  # Try to convert input to an integer
+                if cl <= 0 or cl > max_batch_size:
+                    raise ValueError(f"Number of messages must be between 1 and {max_batch_size}. Please write under limit or purchase the premium from @BinaryBandiT69")
+                break  # Exit loop if conversion is successful
+            except ValueError as e:
+                attempts += 1
+                if attempts == 3:
+                    await app.send_message(message.chat.id, "You have exceeded the maximum number of attempts. Please try again later.")
+                    return
+                await app.send_message(message.chat.id, f"Invalid number: {e}. Please enter a valid number again ...")
         
- # Create an inline button for the channel link
-    join_button = InlineKeyboardButton("Join Channel", url="https://t.me/+YBQtuGJ0XIEzOWU8")
-    keyboard = InlineKeyboardMarkup([[join_button]])
-
-    # Send and Pin message to indicate the batch process has started
-    pin_msg = await app.send_message(
-        user_id,
-        "Batch process started ⚡\n__Processing: 0/{cl}__\n\n**By JarvisBotz**",
-        reply_markup=keyboard
-    )
-    try:
-        await pin_msg.pin()
-    except Exception as e:
-        await pin_msg.pin(both_sides=True)
-    # Start processing links
-    users_loop[user_id] = True
-    try:
-        # FIRST ITERATION: Process t.me/ links without userbot
-        for i in range(cs, cs + cl):
-            if user_id in users_loop and users_loop[user_id]:
-                try:
-                    # Construct the link
-                    x = start_id.split('/')
-                    y = x[:-1]
-                    result = '/'.join(y)
-                    url = f"{result}/{i}"
-                    link = get_link(url)
-                    
-                    # Directly process links like t.me/ (no userbot needed)
-                    if 't.me/' in link and 't.me/b/' not in link and 't.me/c' not in link or 'tg://openmessage' not in link:
-                        userbot = None
-                        data = await db.get_data(user_id)
-                        if data and data.get("session"):
-                            session = data.get("session")
-                            try:
-                                device = 'Vivo Y20'
-                                userbot = Client(
-                                    ":userbot:",
-                                    api_id=API_ID,
-                                    api_hash=API_HASH,
-                                    device_model=device,
-                                    session_string=session
-                                )
-                                await userbot.start()
-                            except Exception as e:
-                                userbot = None
-                        else:
-                            userbot = None
-                        msg = await app.send_message(message.chat.id, f"Processing...")
-                        await process_and_upload_link(userbot, user_id, msg.id, link, 0, message)
-                        await pin_msg.edit_text(
-                        f"Batch process started ⚡\n__Processing: {i - cs + 1}/{cl}__\n\n**By JarvisBotz**",
-                        reply_markup=keyboard
-                        )
-                except Exception as e:
-                    print(f"Error processing link {url}: {e}")
-                    continue
-                    
-        if not any(prefix in start_id for prefix in ['t.me/c/', 't.me/b/']):
-            await set_interval(user_id, interval_minutes=300)
-            await app.send_message(message.chat.id, "Batch completed successfully! 🎉")
-            await pin_msg.edit_text(
-                        f"Batch process completed for {cl} messages enjoy 🌝\n\n**By JarvisBotz**",
-                        reply_markup=keyboard
-            )
+        # Final validation before proceeding
+        can_proceed, response_message = await check_interval(user_id, freecheck)
+        if not can_proceed:
+            await message.reply(response_message)
             return
+            
+        # Create an inline button for the channel link
+        join_button = InlineKeyboardButton("Join Channel", url="https://t.me/JarvisBotz")
+        keyboard = InlineKeyboardMarkup([[join_button]])
 
-        # SECOND ITERATION: Process t.me/+ or t.me/c/ links with userbot
+        # Send and Pin message to indicate the batch process has started
+        pin_msg = await app.send_message(
+            user_id,
+            "Batch process started ⚡\n__Processing: 0/{cl}__\n\n**By JarvisBotz**",
+            reply_markup=keyboard
+        )
+        try:
+            await pin_msg.pin()
+        except Exception as e:
+            await pin_msg.pin(both_sides=True)
+        # Start processing links
+        users_loop[user_id] = True
+
+        # Initialize and start userbot
         data = await db.get_data(user_id)
         if data and data.get("session"):
             session = data.get("session")
@@ -321,40 +274,40 @@ async def batch_link(_, message):
             )
             await userbot.start()
         else:
-            await app.send_message(message.chat.id, "Login in bot first ...")
-            return
+             # Handle case where user is not logged in, if necessary
+            if not any(prefix in start_id for prefix in ['t.me/c/', 't.me/b/']):
+                pass # Public channel, no login needed
+            else:
+                await app.send_message(message.chat.id, "Login in bot first ...")
+                return
 
-        try:
-            for i in range(cs, cs + cl):
-                if user_id in users_loop and users_loop[user_id]:
-                    try:
-                        # Construct the link
-                        x = start_id.split('/')
-                        y = x[:-1]
-                        result = '/'.join(y)
-                        url = f"{result}/{i}"
-                        link = get_link(url)
-                        # Process links requiring userbot
-                        if 't.me/b/' in link or 't.me/c/' in link or 'tg://openmessage' in link:
-                            msg = await app.send_message(message.chat.id, f"Processing...")
-                            await process_and_upload_link(userbot, user_id, msg.id, link, 0, message)
-                            await pin_msg.edit_text(
-                            f"Batch process started ⚡\n__Processing: {i - cs + 1}/{cl}__\n\n**By JarvisBotz**",
-                            reply_markup=keyboard
-                            )
-                    except Exception as e:
-                        print(f"Error processing link {url}: {e}")
-                        continue
-        except Exception as e:
-            print(f"{e}")
-            pass
-
+        for i in range(cs, cs + cl):
+            if user_id in users_loop and users_loop[user_id]:
+                try:
+                    # Construct the link
+                    x = start_id.split('/')
+                    y = x[:-1]
+                    result = '/'.join(y)
+                    url = f"{result}/{i}"
+                    link = get_link(url)
+                    
+                    msg = await app.send_message(message.chat.id, f"Processing...")
+                    await process_and_upload_link(userbot, user_id, msg.id, link, 0, message)
+                    await pin_msg.edit_text(
+                    f"Batch process started ⚡\n__Processing: {i - cs + 1}/{cl}__\n\n**By JarvisBotz**",
+                    reply_markup=keyboard
+                    )
+                except Exception as e:
+                    print(f"Error processing link {url}: {e}")
+                    continue
+        
         await app.send_message(message.chat.id, "Batch completed successfully! 🎉")
         await set_interval(user_id, interval_minutes=300)
         await pin_msg.edit_text(
                         f"Batch completed for {cl} messages ⚡\n\n**By JarvisBotz**",
                         reply_markup=keyboard
         )
+
     except FloodWait as fw:
         await app.send_message(
             message.chat.id,
@@ -363,6 +316,9 @@ async def batch_link(_, message):
     except Exception as e:
         await app.send_message(message.chat.id, f"Error: {str(e)}")
     finally:
+        # Properly stop the userbot session
+        if userbot:
+            await userbot.stop()
         users_loop.pop(user_id, None)
     
 
