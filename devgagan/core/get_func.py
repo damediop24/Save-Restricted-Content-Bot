@@ -96,7 +96,7 @@ async def upload_media(sender, target_chat_id, file, caption, edit):
                 progress=progress_bar,
                 progress_args=("╭─────────────────────╮\n│      **__Pyro Uploader__**\n├─────────────────────", edit, time.time())
             )
-            await asyncio.sleep(2)
+            await asyncio.sleep(5)
             await dm.copy(LOG_GROUP)
             
     elif upload_method == "Telethon":
