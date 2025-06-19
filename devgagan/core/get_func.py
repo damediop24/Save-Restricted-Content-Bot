@@ -927,7 +927,7 @@ async def handle_large_file(file, sender, edit, caption):
 
         from_chat = dm.chat.id
         mg_id = dm.id
-        await asyncio.sleep(2)
+        await asyncio.sleep(5)
         await app.copy_message(target_chat_id, from_chat, mg_id)
 
     except Exception as e:
