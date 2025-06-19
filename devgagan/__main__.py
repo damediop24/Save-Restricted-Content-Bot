@@ -16,7 +16,7 @@ async def schedule_expiry_check():
     scheduler = await create_scheduler()
     while True:
         await scheduler.spawn(check_and_remove_expired_users())
-        await asyncio.sleep(60)  # Check every hour
+        await asyncio.sleep(10)  # Check every hour
         gc.collect()
 
 async def devggn_boot():
