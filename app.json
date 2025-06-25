@@ -23,7 +23,7 @@
     },
     "MONGO_DB": {
       "description": "Get a MongoDB URL from https://cloud.mongodb.com.",
-      "value": "mongodb+srv://damealorica:YOUR_DB_PASSWORD@saverbot.znrlqwc.mongodb.net/?retryWrites=true&w=majority&appName=SaverBot",
+      "value": "mongodb+srv://damealorica:moitiere1A@saverbot.znrlqwc.mongodb.net/?retryWrites=true&w=majority&appName=SaverBot",
       "required": true
     },
     "OWNER_ID": {
