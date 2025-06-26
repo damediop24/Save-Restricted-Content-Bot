@@ -228,7 +228,7 @@ async def batch_link(_, message):
             try:
                 cl = int(num_messages.text.strip())  # Try to convert input to an integer
                 if cl <= 0 or cl > max_batch_size:
-                    raise ValueError(f"Number of messages must be between 1 and {max_batch_size}. Please write under limit or purchase the premium from @damed2025")
+                    raise ValueError(f"Number of messages must be between 1 and {max_batch_size}. Please write under limit or purchase the premium from @dame2907")
                 break  # Exit loop if conversion is successful
             except ValueError as e:
                 attempts += 1
