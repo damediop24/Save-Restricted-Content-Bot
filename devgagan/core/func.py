@@ -70,11 +70,11 @@ async def get_seconds(time_string):
     else:
         return 0
 PROGRESS_BAR = """\n
-│ **__Completed:__** {1}/{2}
-│ **__Bytes:__** {0}%
-│ **__Speed:__** {3}/s
-│ **__ETA:__** {4}
-╰─────────────────────╯
+â”‚ **__Completed:__** {1}/{2}
+â”‚ **__Bytes:__** {0}%
+â”‚ **__Speed:__** {3}/s
+â”‚ **__ETA:__** {4}
+â•°â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â•¯
 """
 async def progress_bar(current, total, ud_type, message, start):
 
@@ -92,8 +92,8 @@ async def progress_bar(current, total, ud_type, message, start):
         estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
 
         progress = "{0}{1}".format(
-            ''.join(["♦" for i in range(math.floor(percentage / 10))]),
-            ''.join(["◇" for i in range(10 - math.floor(percentage / 10))]))
+            ''.join(["â™¦" for i in range(math.floor(percentage / 10))]),
+            ''.join(["â—‡" for i in range(10 - math.floor(percentage / 10))]))
 
         tmp = progress + PROGRESS_BAR.format( 
             round(percentage, 2),
@@ -105,7 +105,7 @@ async def progress_bar(current, total, ud_type, message, start):
         )
         try:
             await message.edit(
-                text="{}\n│ {}".format(ud_type, tmp),)             
+                text="{}\nâ”‚ {}".format(ud_type, tmp),)             
         except:
             pass
 
@@ -152,7 +152,7 @@ async def userbot_join(userbot, invite_link):
         print(e)
         return "Could not join, try joining manually."
 def get_link(string):
-    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?Â«Â»â€œâ€â€˜â€™]))"
     url = re.findall(regex,string)   
     try:
         link = [x[0] for x in url][0]
@@ -227,17 +227,17 @@ async def progress_callback(current, total, progress_message):
     if current_time - last_update_time >= 10 or percent % 10 == 0:
         completed_blocks = int(percent // 10)
         remaining_blocks = 10 - completed_blocks
-        progress_bar = "♦" * completed_blocks + "◇" * remaining_blocks
+        progress_bar = "â™¦" * completed_blocks + "â—‡" * remaining_blocks
         current_mb = current / (1024 * 1024)  
         total_mb = total / (1024 * 1024)      
         await progress_message.edit(
-    f"╭──────────────────╮\n"
-    f"│        **__Uploading...__**       \n"
-    f"├──────────\n"
-    f"│ {progress_bar}\n\n"
-    f"│ **__Progress:__** {percent:.2f}%\n"
-    f"│ **__Uploaded:__** {current_mb:.2f} MB / {total_mb:.2f} MB\n"
-    f"╰──────────────────╯\n\n"
+    f"â•­â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â•®\n"
+    f"â”‚        **__Uploading...__**       \n"
+    f"â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€\n"
+    f"â”‚ {progress_bar}\n\n"
+    f"â”‚ **__Progress:__** {percent:.2f}%\n"
+    f"â”‚ **__Uploaded:__** {current_mb:.2f} MB / {total_mb:.2f} MB\n"
+    f"â•°â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â•¯\n\n"
     f"**By JarvisBotz**"
         )
 
@@ -258,8 +258,8 @@ async def prog_bar(current, total, ud_type, message, start):
         estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
 
         progress = "{0}{1}".format(
-            ''.join(["♦" for i in range(math.floor(percentage / 10))]),
-            ''.join(["◇" for i in range(10 - math.floor(percentage / 10))]))
+            ''.join(["â™¦" for i in range(math.floor(percentage / 10))]),
+            ''.join(["â—‡" for i in range(10 - math.floor(percentage / 10))]))
 
         tmp = progress + PROGRESS_BAR.format( 
             round(percentage, 2),
@@ -271,7 +271,7 @@ async def prog_bar(current, total, ud_type, message, start):
         )
         try:
             await message.edit_text(
-                text="{}\n│ {}".format(ud_type, tmp),)             
+                text="{}\nâ”‚ {}".format(ud_type, tmp),)             
 
         except:
             pass
